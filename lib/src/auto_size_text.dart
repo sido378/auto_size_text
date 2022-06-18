@@ -370,7 +370,7 @@ class _AutoSizeTextState extends State<AutoSizeText> {
   bool _checkTextFits(
       TextSpan text, double scale, int? maxLines, BoxConstraints constraints) {
     if (!widget.wrapWords) {
-      final words = text.toPlainText().split(RegExp('\\s+'));
+      final words = text.toPlainText().split(RegExp('\\n+'));
 
       final wordWrapTextPainter = TextPainter(
         text: TextSpan(
