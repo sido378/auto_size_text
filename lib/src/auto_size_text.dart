@@ -369,8 +369,9 @@ class _AutoSizeTextState extends State<AutoSizeText> {
 
   bool _checkTextFits(
       TextSpan text, double scale, int? maxLines, BoxConstraints constraints) {
+    final renderText = text.text?.replaceAll('\u{00A0}', '🗾') ?? '';
     if (!widget.wrapWords) {
-      final words = text.toPlainText().split(RegExp('\\n+'));
+      final words = renderText.split(RegExp('\\n+'));
 
       final wordWrapTextPainter = TextPainter(
         text: TextSpan(
@@ -394,7 +395,14 @@ class _AutoSizeTextState extends State<AutoSizeText> {
     }
 
     final textPainter = TextPainter(
-      text: text,
+      // text: text,
+      text: TextSpan(
+        text: renderText,
+        recognizer: text.recognizer,
+        children: text.children,
+        semanticsLabel: text.semanticsLabel,
+        style: text.style,
+      ),
       textAlign: widget.textAlign ?? TextAlign.left,
       textDirection: widget.textDirection ?? TextDirection.ltr,
       textScaleFactor: scale,
